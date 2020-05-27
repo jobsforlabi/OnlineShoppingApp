@@ -1,0 +1,6 @@
+F:\Labi\.Net Projects\OnlineShoppingApp\OnlineShoppingApp.Utility\bin\Debug\OnlineShoppingApp.Utility.dll
+F:\Labi\.Net Projects\OnlineShoppingApp\OnlineShoppingApp.Utility\bin\Debug\OnlineShoppingApp.Utility.pdb
+F:\Labi\.Net Projects\OnlineShoppingApp\OnlineShoppingApp.Utility\obj\Debug\OnlineShoppingApp.Utility.csprojAssemblyReference.cache
+F:\Labi\.Net Projects\OnlineShoppingApp\OnlineShoppingApp.Utility\obj\Debug\OnlineShoppingApp.Utility.csproj.CoreCompileInputs.cache
+F:\Labi\.Net Projects\OnlineShoppingApp\OnlineShoppingApp.Utility\obj\Debug\OnlineShoppingApp.Utility.dll
+F:\Labi\.Net Projects\OnlineShoppingApp\OnlineShoppingApp.Utility\obj\Debug\OnlineShoppingApp.Utility.pdb
