@@ -137,6 +137,7 @@
     <Compile Include="Controllers\OnlineShoppingBaseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="ControllerUtilities\AuthorizeUserAttribute.cs" />
     <Compile Include="ControllerUtilities\CryptoProvider.cs" />
     <Compile Include="ControllerUtilities\HandleExceptionFilter.cs" />
     <Compile Include="DataAccess\GenericRepository.cs" />

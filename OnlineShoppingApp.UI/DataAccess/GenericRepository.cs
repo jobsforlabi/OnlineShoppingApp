@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace OnlineShoppingApp.UI.DataAccess
 {
@@ -22,7 +23,7 @@ namespace OnlineShoppingApp.UI.DataAccess
             this.table = shoppingContext.Set<T>();
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             try
             {
@@ -40,17 +41,39 @@ namespace OnlineShoppingApp.UI.DataAccess
             }
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll(Func<T, bool> whereClause, params Expression<Func<T, object>>[] navigationProperties)
         {
-            return table.ToList();
+            IQueryable<T> query = table;
+
+            if(whereClause != null)
+            {
+                query.Where(whereClause);
+            }
+
+            if (navigationProperties != null)
+            {
+                foreach (var navigaionProperty in navigationProperties)
+                {
+                    query = query.Include(navigaionProperty);
+                }
+            }
+
+            return query.ToList();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id, params Expression<Func<T, object>>[] navigationProperties)
         {
-            return table.Find(id);
+            IQueryable<T> query = table.Find(id) as IQueryable<T>;
+
+            foreach (var navigaionProperty in navigationProperties)
+            {
+                query = query.Include(navigaionProperty);
+            }
+
+            return query.FirstOrDefault();
         }
 
-        public void Insert(T entity)
+        public virtual void Insert(T entity)
         {
             try
             {
@@ -63,7 +86,7 @@ namespace OnlineShoppingApp.UI.DataAccess
             }
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             try
             {

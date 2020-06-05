@@ -1,4 +1,5 @@
 ﻿using OnlineShoppingApp.UI.Alerts;
+using OnlineShoppingApp.UI.ControllerUtilities;
 using OnlineShoppingApp.UI.DataAccess;
 using OnlineShoppingApp.UI.Models;
 using System.Web.Mvc;
@@ -17,7 +18,7 @@ namespace OnlineShoppingApp.UI.Controllers
 
         public ActionResult Index()
         {
-            return View(repository.GetAll());
+            return View(repository.GetAll(null, null));
         }
 
         public ActionResult Details(int? id)
@@ -27,7 +28,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            Role role = repository.GetById(id.Value);
+            Role role = repository.GetById(id.Value, null);
 
             if(role == null)
             {
@@ -37,6 +38,7 @@ namespace OnlineShoppingApp.UI.Controllers
             return View(role);
         }
 
+        [AuthorizeUser("Admin", "SuperAdmin")]
         public ActionResult Create()
         {
             return View();
@@ -63,7 +65,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            Role role = repository.GetById(id.Value);
+            Role role = repository.GetById(id.Value, null);
 
             if (role == null)
             {
@@ -83,7 +85,7 @@ namespace OnlineShoppingApp.UI.Controllers
             }
             else
             {
-                Role oldRole = repository.GetById(id);
+                Role oldRole = repository.GetById(id, null);
 
                 if (oldRole == null)
                 {
@@ -101,7 +103,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            Role role = repository.GetById(id.Value);
+            Role role = repository.GetById(id.Value, null);
 
             if (role == null)
             {
