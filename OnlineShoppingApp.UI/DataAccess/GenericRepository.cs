@@ -50,7 +50,7 @@ namespace OnlineShoppingApp.UI.DataAccess
                 query = query.Where(whereClause).AsQueryable();
             }
 
-            if (navigationProperties != null)
+            if (query != null && navigationProperties != null && navigationProperties.Any())
             {
                 foreach (var navigaionProperty in navigationProperties)
                 {
@@ -61,16 +61,29 @@ namespace OnlineShoppingApp.UI.DataAccess
             return query.ToList();
         }
 
-        public virtual T GetById(int id, params Expression<Func<T, object>>[] navigationProperties)
+        public virtual T GetEntity(Func<T, bool> whereClause, params Expression<Func<T, object>>[] navigationProperties)
         {
-            IQueryable<T> query = table.Find(id) as IQueryable<T>;
+            IQueryable<T> query = table;
 
-            foreach (var navigaionProperty in navigationProperties)
+            if (whereClause != null)
             {
-                query = query.Include(navigaionProperty);
+                query = query.Where(whereClause).AsQueryable();
+            }
+
+            if (query != null && navigationProperties != null && navigationProperties.Any())
+            {
+                foreach (var navigaionProperty in navigationProperties)
+                {
+                    query = query.Include(navigaionProperty);
+                }
             }
 
             return query.FirstOrDefault();
+        }
+
+        public virtual T GetById(int id)
+        {
+            return table.Find(id);
         }
 
         public virtual void Insert(T entity)
