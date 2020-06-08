@@ -47,7 +47,7 @@ namespace OnlineShoppingApp.UI.DataAccess
 
             if(whereClause != null)
             {
-                query.Where(whereClause);
+                query = query.Where(whereClause).AsQueryable();
             }
 
             if (navigationProperties != null)
