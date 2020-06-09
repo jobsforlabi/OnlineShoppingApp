@@ -9,16 +9,16 @@ namespace OnlineShoppingApp.UI.Controllers
     [Authorize]
     public class RoleController : OnlineShoppingBaseController
     {
-        private IGenericRepository<Role> repository = null;
+        private IGenericRepository<Role> roleRepository = null;
 
         public RoleController()
         {
-            repository = new GenericRepository<Role>();
+            roleRepository = new GenericRepository<Role>();
         }
 
         public ActionResult Index()
         {
-            return View(repository.GetAll(null, null));
+            return View(roleRepository.GetAll(null, null));
         }
 
         public ActionResult Details(int? id)
@@ -28,7 +28,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            Role role = repository.GetById(id.Value);
+            Role role = roleRepository.GetById(id.Value);
 
             if(role == null)
             {
@@ -45,11 +45,11 @@ namespace OnlineShoppingApp.UI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Create(Role role)
+        public ActionResult Create([Bind(Exclude = "Id")]Role role)
         {
             if (ModelState.IsValid)
             {
-                repository.Insert(role);
+                roleRepository.Insert(role);
                 return RedirectToAction<RoleController>(x => x.Index()).WithSuccess("Role updated successfully!");
             }
             else
@@ -65,7 +65,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            Role role = repository.GetById(id.Value);
+            Role role = roleRepository.GetById(id.Value);
 
             if (role == null)
             {
@@ -80,12 +80,12 @@ namespace OnlineShoppingApp.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.Update(role);
+                roleRepository.Update(role);
                 return RedirectToAction<RoleController>(x => x.Index()).WithSuccess("Role updated successfully!");
             }
             else
             {
-                Role oldRole = repository.GetById(id);
+                Role oldRole = roleRepository.GetById(id);
 
                 if (oldRole == null)
                 {
@@ -103,7 +103,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            Role role = repository.GetById(id.Value);
+            Role role = roleRepository.GetById(id.Value);
 
             if (role == null)
             {
@@ -121,7 +121,7 @@ namespace OnlineShoppingApp.UI.Controllers
                 return RedirectToAction<RoleController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
             }
 
-            repository.Delete(id);
+            roleRepository.Delete(id);
             return RedirectToAction<RoleController>(x => x.Index()).WithSuccess("Role deleted successfully!");
         }
     }

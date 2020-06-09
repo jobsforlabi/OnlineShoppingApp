@@ -3,6 +3,7 @@ using OnlineShoppingApp.UI.ModelMetadata.Filters;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace OnlineShoppingApp.UI
 {
@@ -22,6 +23,13 @@ namespace OnlineShoppingApp.UI
                                                                             new WatermarkConventionFilter(),
                                                                             new PasswordByNameConventionFilter()
                                                                         });
+        }
+
+        protected void Session_End()
+        {
+            FormsAuthentication.SignOut();
+            Session.Remove("CurrentUser");
+            Session.Abandon();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace OnlineShoppingApp.UI.Controllers
             {
                 FormsAuthentication.SetAuthCookie(validUser.Email, false);
                 CurrentUser = validUser;
-                return RedirectToAction<RoleController>(x => x.Index());
+                return RedirectToAction<CategoryController>(x => x.Index());
             }
             else
             {
