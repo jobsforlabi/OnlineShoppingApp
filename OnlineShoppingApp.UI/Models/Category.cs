@@ -7,7 +7,7 @@ namespace OnlineShoppingApp.UI.Models
 {
     public class Category
     {
-        [Key, HiddenInput]
+        [HiddenInput]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [MaxLength(50)]

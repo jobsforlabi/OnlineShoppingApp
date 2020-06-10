@@ -7,7 +7,7 @@ namespace OnlineShoppingApp.UI.Models
 {
     public class Product
     {
-        [Key, HiddenInput]
+        [HiddenInput]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey("ProductCategory")]

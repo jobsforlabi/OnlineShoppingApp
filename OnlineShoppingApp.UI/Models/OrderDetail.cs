@@ -6,7 +6,7 @@ namespace OnlineShoppingApp.UI.Models
 {
     public class OrderDetail
     {
-        [Key, HiddenInput]
+        [HiddenInput]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey("Order")]

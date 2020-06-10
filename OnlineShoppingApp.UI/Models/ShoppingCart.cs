@@ -7,7 +7,7 @@ namespace OnlineShoppingApp.UI.Models
 {
     public class ShoppingCart
     {
-        [Key, HiddenInput]
+        [HiddenInput]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]

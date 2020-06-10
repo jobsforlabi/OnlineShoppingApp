@@ -46,7 +46,7 @@ namespace OnlineShoppingApp.UI.Controllers
 
         // POST: ProductCategory/Create
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")]Category category)
+        public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {

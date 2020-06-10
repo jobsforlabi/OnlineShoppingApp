@@ -10,7 +10,7 @@ namespace OnlineShoppingApp.UI.Models
 {
     public class Order
     {
-        [Key, HiddenInput]
+        [HiddenInput]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]

@@ -45,7 +45,7 @@ namespace OnlineShoppingApp.UI.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")]Role role)
+        public ActionResult Create(Role role)
         {
             if (ModelState.IsValid)
             {
