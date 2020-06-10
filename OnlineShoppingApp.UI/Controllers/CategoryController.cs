@@ -79,7 +79,7 @@ namespace OnlineShoppingApp.UI.Controllers
 
         // POST: ProductCategory/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Category category)
+        public ActionResult Edit(int id, [Bind(Exclude = "Products")]Category category)
         {
             if (ModelState.IsValid)
             {

@@ -22,10 +22,66 @@ select,
 textarea {
     max-width: 280px;
 }
-.alert-container{
-    left:0em;
-    right:0em;
-    position:fixed;
-    padding-left:3em;
-    padding-right:3em;
+@-webkit-keyframes shake {
+    0%,10%,20%,30%,40% {
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    5%,15%,25%,35% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+    }
+
+    41% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes shake {
+    0%,10%,20%,30%,40% {
+        -moz-transform: translate3d(0, 0, 0);
+    }
+
+    5%,15%,25%,35% {
+        -moz-transform: translate3d(-10px, 0, 0);
+    }
+
+    41% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes shake {
+    0%,10%,20%,30%,40% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    5%,15%,25%,35% {
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    41% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+.alert-container {
+    left: 0em;
+    right: 0em;
+    position: fixed;
+    padding-left: 3em;
+    padding-right: 3em;
+    -webkit-animation-name: shake;
+    -moz-animation-name: shake;
+    animation: shake 10s forwards;
 }

@@ -19,7 +19,7 @@ namespace OnlineShoppingApp.UI.ControllerUtilities
             bool isUserAuthorized = false;
             User user = (User)httpContext.Session["CurrentUser"];
 
-            if(user.Role != null)
+            if(user != null && user.Role != null)
             {
                 if(authorizedRoles.Any(x => x == user.Role.RoleName))
                 {
