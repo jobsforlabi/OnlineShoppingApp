@@ -1,14 +1,13 @@
-﻿using OnlineShoppingApp.UI.DataAccess;
+﻿using OnlineShoppingApp.UI.Alerts;
+using OnlineShoppingApp.UI.ControllerUtilities;
+using OnlineShoppingApp.UI.DataAccess;
 using OnlineShoppingApp.UI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OnlineShoppingApp.UI.Controllers
 {
-    public class ProductController : Controller
+    [AuthorizeUser("SuperAdmin")]
+    public class ProductController : OnlineShoppingBaseController
     {
         private IGenericRepository<Product> productRepository;
         public ProductController()
@@ -18,13 +17,25 @@ namespace OnlineShoppingApp.UI.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            return View();
+            return View(productRepository.GetAll(null, null));
         }
 
         // GET: Product/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (!id.HasValue || id <= 0)
+            {
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
+            }
+
+            Product product = productRepository.GetById(id.Value);
+
+            if (product == null)
+            {
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Product does not exist!");
+            }
+
+            return View(product);
         }
 
         // GET: Product/Create
@@ -34,63 +45,89 @@ namespace OnlineShoppingApp.UI.Controllers
         }
 
         // POST: Product/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Exclude = "Id")]Product product)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                productRepository.Insert(product);
+                return RedirectToAction<ProductController>(x => x.Index()).WithSuccess("Product updated successfully!");
             }
-            catch
+            else
             {
                 return View();
             }
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (!id.HasValue || id <= 0)
+            {
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
+            }
+
+            Product product = productRepository.GetById(id.Value);
+
+            if (product == null)
+            {
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Product does not exist!");
+            }
+
+            return View(product);
         }
 
         // POST: Product/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, [Bind(Exclude = "ProductCategory, ShoppingCarts")] Product product)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                productRepository.Update(product);
+                return RedirectToAction<ProductController>(x => x.Index()).WithSuccess("Product updated successfully!");
             }
-            catch
+            else
             {
-                return View();
+                Product oldProduct = productRepository.GetById(id);
+
+                if (oldProduct == null)
+                {
+                    return RedirectToAction<ProductController>(x => x.Index()).WithError("Product does not exist!");
+                }
+
+                return View(oldProduct);
             }
         }
 
         // GET: Product/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (!id.HasValue || id <= 0)
+            {
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
+            }
+
+            Product product = productRepository.GetById(id.Value);
+
+            if (product == null)
+            {
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Product does not exist!");
+            }
+
+            return View(product);
         }
 
         // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
         {
-            try
+            if (id <= 0)
             {
-                // TODO: Add delete logic here
+                return RedirectToAction<ProductController>(x => x.Index()).WithError("Id cannot be less than or equal to zero!");
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            productRepository.Delete(id);
+            return RedirectToAction<ProductController>(x => x.Index()).WithSuccess("Product deleted successfully!");
         }
     }
 }
